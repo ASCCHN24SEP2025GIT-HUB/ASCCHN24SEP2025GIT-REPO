@@ -1,8 +1,8 @@
 package com.demo.inheritance;
 
-public class FinalClass {
-
-}
+//public class FinalClass {
+//
+//}
 
 final class FC {
 
@@ -13,13 +13,13 @@ final class FC {
 //}
 
 
-class ClassA {
+//class ClassA {
+//
+//}
 
-}
-
-final class FC6 extends ClassA {
-
-}
+//final class FC6 extends ClassA {
+//
+//}
 //class FC1 extends FC {
 //
 //}
