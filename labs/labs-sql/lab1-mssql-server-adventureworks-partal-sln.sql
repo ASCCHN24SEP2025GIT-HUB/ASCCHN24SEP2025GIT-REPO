@@ -102,6 +102,11 @@ SELECT SalesOrderID, OrderDate, TotalDue
 FROM SalesLT.SalesOrderHeader 
 WHERE YEAR(OrderDate) = 2008;
 
+SELECT GETDATE() AS CurrentDateTime;  -- Example of a date function
+-- Print the date in dd-mm-yyyy format
+SELECT FORMAT(GETDATE(), 'dd/MM/yyyy') AS FormattedDate;
+SELECT MONTH(GETDATE()) AS CurrentMonth;  -- Example of extracting month
+
 -- 15. Find products priced between $100 and $500.
 -- Problem: List all products whose ListPrice is between 100 and 500, inclusive. 
 -- This helps in identifying mid-range products.
@@ -643,8 +648,8 @@ SELECT c.CustomerID, c.FirstName, c.LastName,
        END AS AvgMonthlyValue 
 FROM SalesLT.Customer c
 INNER JOIN SalesLT.SalesOrderHeader soh ON c.CustomerID = soh.CustomerID 
-GROUP BY c.CustomerID, c.FirstName, c.LastName 
-HAVING COUNT(soh.SalesOrderID) > 1;
+GROUP BY c.CustomerID, c.FirstName, c.LastName
+-- HAVING COUNT(soh.SalesOrderID) > 1;
 
 -- 96. What are the complete details and calculated costs for each sales order?
 -- Problem: For each sales order, show customer name, order/ship dates, line item count, total items, subtotal, tax, freight, total due, and additional cost percent.
@@ -665,3 +670,4 @@ HAVING COUNT(soh.SalesOrderID) > 1;
 -- 100. Can I get a comprehensive sales dashboard with key metrics?
 -- Problem: Show a dashboard with total customers, active products, total orders, total revenue, average order value, top product by revenue, orders and revenue for the current month.
 -- Hint: Use scalar subqueries for each metric.
+
