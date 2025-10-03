@@ -13,44 +13,53 @@
 -- SalesLT is the schema name and Customer is the table name.
 -- Schemas are optional, if not specified, the default schema (usually dbo) is used.
 -- They help organize database objects into logical groups.
-
+SELECT * FROM SalesLT.Customer;
 -- 2. Display all products offered by the company.
 -- Problem: Show a complete list of products available in the SalesLT.Product table. 
 -- Include every detail for each product, such as name, price, and product number.
 -- Hint: SELECT * will return all product details.
+SELECT * FROM SalesLT.Product;
 
 -- 3. Show the first name, last name, and email address of every customer.
 -- Problem: Extract only the FirstName, LastName, and EmailAddress columns from the customer table. 
 -- This is useful for creating a contact list or sending emails to customers.
 -- Hint: Specify the columns you want in the SELECT clause.
+SELECT FirstName, LastName, EmailAddress FROM SalesLT.Customer;
 
 -- 4. List the name and price of each product.
 -- Problem: For each product, display its name and the price at which it is listed (ListPrice). 
 -- This helps in understanding the product catalog and pricing.
 -- Hint: Only select the Name and ListPrice columns.
+SELECT Name, ListPrice FROM SalesLT.Product;
 
 -- 5. Count the total number of customers.
 -- Problem: Find out how many customers are currently in the database. 
 -- This is a simple count of all rows in the SalesLT.Customer table.
 -- Hint: Use COUNT(*) to count all rows.
-
+SELECT COUNT(*) AS TotalCustomers FROM SalesLT.Customer;
 -- 6. Count the total number of products in the catalog.
 -- Problem: Determine how many products are available for sale by counting all entries in the Product table.
 -- Hint: Use COUNT(*) on the Product table.
+SELECT COUNT(*) AS TotalProducts FROM SalesLT.Product;
 
 -- 7. List all unique product colors that are not null.
 -- Problem: Identify all distinct colors that products come in, ignoring any products where the color is not specified (NULL).
 -- Hint: Use DISTINCT and filter out NULLs with WHERE.
+SELECT DISTINCT Color FROM SalesLT.Product WHERE Color IS NOT NULL;
+SELECT MIN(PRODUCTID) FROM SALESLT.PRODUCT;
+SELECT TOP 10 PRODUCTID FROM "SalesLT".PRODUCT ORDER BY PRODUCTID ASC;
 
 -- 8. Show the 10 most expensive products.
 -- Problem: Find the top 10 products with the highest ListPrice. 
 -- Display their names and prices, sorted from most to least expensive.
 -- Hint: Use TOP 10 and ORDER BY ListPrice DESC.
+SELECT TOP 10 Name, ListPrice FROM SalesLT.Product ;
+SELECT * FROM SALESLT.PRODUCT;
 
 -- 9. Retrieve all sales orders placed so far.
 -- Problem: Display every sales order in the system, including all details for each order.
 -- Hint: SELECT * from SalesOrderHeader.
-
+SELECT * FROM SalesLT.SalesOrderHeader;
 -- 10. List products that are currently in stock (not discontinued).
 -- Problem: Show all products that are still available for sale, i.e., those that do not have a SellEndDate (SellEndDate IS NULL).
 -- Include their name, product number, and standard cost.
@@ -64,7 +73,7 @@
 -- Problem: List all products where the ListPrice is more than 1000. 
 -- Show their names and prices to identify high-value items.
 -- Hint: Use WHERE ListPrice > 1000.
-
+SELECT Name, ListPrice FROM SalesLT.Product WHERE ListPrice > 1000;
 -- 12. List customers who are based in Seattle.
 -- Problem: Identify all customers whose address is in the city of Seattle. 
 -- You will need to join the Customer, CustomerAddress, and Address tables to get the city information.
@@ -74,7 +83,7 @@
 -- Problem: Find products where the Color is 'Red'. 
 -- Display their name, color, and price.
 -- Hint: Use WHERE Color = 'Red'.
-
+SELECT Name, Color, ListPrice FROM SalesLT.Product WHERE Color = 'Red';
 -- 14. List orders placed in the year 2008.
 -- Problem: Retrieve all sales orders where the order date falls in 2008. 
 -- Show the order ID, date, and total due.
@@ -84,7 +93,9 @@
 -- Problem: List all products whose ListPrice is between 100 and 500, inclusive. 
 -- This helps in identifying mid-range products.
 -- Hint: Use WHERE ListPrice BETWEEN 100 AND 500.
-
+SELECT  Name, ListPrice FROM SalesLT.Product WHERE  ListPrice NOT  BETWEEN 120 AND 125 ORDER BY ListPrice ;
+SELECT  Name, ListPrice FROM SalesLT.Product WHERE NOT ListPrice  BETWEEN 120 AND 125 ORDER BY ListPrice ;
+SELECT  Name, ListPrice FROM SalesLT.Product WHERE  ListPrice <> BETWEEN 120 AND 125 ORDER BY ListPrice ;
 -- 16. List customers with an adventure-works.com email address.
 -- Problem: Find all customers whose email address ends with 'adventure-works.com'. 
 -- This is useful for identifying company employees or partners.
@@ -94,20 +105,32 @@
 -- Problem: List all products where the name begins with the word "Mountain". 
 -- Useful for finding a specific product line.
 -- Hint: Use WHERE Name LIKE 'Mountain%'.
+SELECT Name FROM SalesLT.Product WHERE Name LIKE '%48';
 
 -- 18. List products without a specified color.
 -- Problem: Find all products where the Color field is NULL, indicating no color has been set.
 -- Hint: Use WHERE Color IS NULL.
+SELECT Name, Color FROM SalesLT.Product WHERE Color IS not NULL;
+SELECT Name, Color FROM SalesLT.Product WHERE not Color IS  NULL;
 
 -- 19. Find customers who have provided their phone numbers.
 -- Problem: List all customers who have a non-null value in the Phone column.
 -- Hint: Use WHERE Phone IS NOT NULL.
-
--- 20. List products in the 'Helmets' or 'Gloves' categories.
+SELECT FirstName, LastName, Phone FROM SalesLT.Customer WHERE Phone IS NOT NULL;
+-- 20. List products that belongs to 'Helments' and 'Gloves' categories.
 -- Problem: Show all products that belong to either the 'Helmets' or 'Gloves' categories. 
 -- Join Product and ProductCategory tables to get the category name.
 -- Hint: Use JOIN and WHERE pc.Name IN ('Helmets', 'Gloves').
 
+SELECT p.Name, p.ListPrice, pc.Name AS CategoryName
+FROM SalesLT.Product p
+JOIN SalesLT.ProductCategory pc ON p.ProductCategoryID = pc.ProductCategoryID
+WHERE pc.Name IN ('Helmets', 'Gloves');
+
+SELECT p.Name, p.ListPrice, pc.Name AS CategoryName
+FROM SalesLT.Product p
+JOIN SalesLT.ProductCategory pc ON p.ProductCategoryID = pc.ProductCategoryID
+WHERE pc.Name != 'Helmets' and pc.name = 'Helmets';
 
 -- AGGREGATE FUNCTIONS (21-30)
 -- ============================================
@@ -115,7 +138,16 @@
 -- 21. Calculate the average price of all products.
 -- Problem: Find the mean ListPrice for all products in the catalog. This helps understand overall pricing.
 -- Hint: Use AVG(ListPrice).
+select avg(ListPrice) as AveragePrice from SalesLT.Product;
+select count_big(*) as TotalProducts from SalesLT.Product;
+select count(*) as TotalProducts from SalesLT.Product;
+SELECT COUNT(COLOR) FROM SALESLT.PRODUCT;
+SELECT COUNT(*) FROM  SalesLT."Product" WHERE COLOR IS NOT NULL;
 
+SELECT COUNT(*) FROM  SalesLT."Product" WHERE COLOR IS  NULL;
+SELECT  COUNT(DISTINCT COLOR) FROM  SalesLT."Product" WHERE COLOR IS NOT  NULL;
+SELECT  APPROX_COUNT_DISTINCT( COLOR) FROM  SalesLT."Product" WHERE COLOR IS NOT  NULL;
+SELECT COLOR FROM  SalesLT."Product" ORDER BY COLOR;
 -- 22. Compute the total sales revenue so far.
 -- Problem: Add up the TotalDue for all sales orders to see the company's total revenue to date.
 -- Hint: Use SUM(TotalDue).
@@ -460,3 +492,18 @@
 -- Problem: Show a dashboard with total customers, active products, total orders, total revenue, average order value, top product by revenue, orders and revenue for the current month.
 -- Hint: Use scalar subqueries for each metric.
 
+SELECT 
+    (SELECT COUNT(*) FROM SalesLT.Customer) AS TotalCustomers,
+    (SELECT COUNT(*) FROM SalesLT.Product WHERE SellEndDate IS NULL) AS ActiveProducts,
+    (SELECT COUNT(*) FROM SalesLT.SalesOrderHeader) AS TotalOrders,
+    (SELECT SUM(TotalDue) FROM SalesLT.SalesOrderHeader) AS TotalRevenue,
+    (SELECT AVG(TotalDue) FROM SalesLT.SalesOrderHeader) AS AvgOrderValue,
+    (SELECT TOP 1 Name FROM SalesLT.Product p 
+     INNER JOIN SalesLT.SalesOrderDetail sod ON p.ProductID = sod.ProductID 
+     GROUP BY p.Name 
+     ORDER BY SUM(sod.LineTotal) DESC) AS TopProductByRevenue,
+    (SELECT COUNT(*) FROM SalesLT.SalesOrderHeader soh 
+     INNER JOIN SalesLT.Customer c ON soh.CustomerID = c.CustomerID 
+     WHERE YEAR(soh.OrderDate) = YEAR(GETDATE()) AND MONTH(soh.OrderDate) = MONTH(GETDATE())) AS OrdersThisMonth,
+    (SELECT SUM(TotalDue) FROM SalesLT.SalesOrderHeader 
+     WHERE YEAR(OrderDate) = YEAR(GETDATE()) AND MONTH(OrderDate) = MONTH(GETDATE())) AS RevenueThisMonth
