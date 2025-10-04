@@ -210,14 +210,11 @@ SELECT ROUND(-1254.567, -2);
 SELECT ROUND(-1256.567, -3) AS 'ROUNDED VALUE';  
 SELECT ROUND(-1256.567, -2) AS 'ROUNDED VALUE';
 
-
 -- 5 EXAMPLES FOR CEILING AND FLOOR
 SELECT FLOOR(1.2);  
 SELECT CEILING (1.6);  
 SELECT FLOOR(-1.2);  
 SELECT CEILING (-1.6);  
-
-
 
 SELECT CEILING (1.2);  
 SELECT FLOOR(-1.8);                    
@@ -228,6 +225,7 @@ SELECT Salary, CEILING(Salary/1000) * 1000 AS CeilingSalary,
 FROM Employees;
 
 -- ABS (absolute value)
+-- Absolute value is the non-negative value of a number without regard to its sign.
 SELECT ABS(-150) AS AbsoluteValue;
 
 -- POWER, SQRT
@@ -237,11 +235,13 @@ SELECT POWER(2, 3) AS PowerResult, SQRT(16) AS SquareRoot;
 -- GETDATE (current date/time)
 SELECT GETDATE() AS CurrentDateTime;
 
+
 -- DATEADD
 SELECT HireDate, DATEADD(YEAR, 1, HireDate) AS OneYearLater 
 FROM Employees;
 
 -- DATEDIFF
+-- The parameters to DATEDIFF are (datepart, startdate, enddate)
 SELECT FirstName, HireDate, 
        DATEDIFF(DAY, HireDate, GETDATE()) AS DaysEmployed 
 FROM Employees;
@@ -253,16 +253,37 @@ SELECT HireDate, YEAR(HireDate) AS HireYear,
 FROM Employees;
 
 -- FORMAT (date formatting)
-SELECT HireDate, FORMAT(HireDate, 'MM/dd/yyyy') AS FormattedDate 
+SELECT HireDate, FORMAT(HireDate, 'MM-dd/yyyy') AS FormattedDate 
 FROM Employees;
-
+-- Tabulation of common date formats
+-- 'd' - Short date pattern (e.g., 6/15/2009
+SELECT FORMAT(HireDate, 'd') AS ShortDate FROM Employees;
+-- 'D' - Long date pattern (e.g., Monday, June 15, 2009)
+SELECT FORMAT(HireDate, 'D') AS LongDate FROM Employees;
+-- 't' - Short time pattern (e.g., 6:30 PM)
+SELECT FORMAT(HireDate, 't') AS ShortTime FROM Employees;
+-- 'T' - Long time pattern (e.g., 6:30:00 PM)
+SELECT FORMAT(HireDate, 'T') AS LongTime FROM Employees;
+-- 'f' - Full date/time pattern (short time) (e.g., Monday, June 15, 2009 6:30 PM)
+SELECT FORMAT(HireDate, 'f') AS FullDateShortTime FROM Employees;
+-- 'F' - Full date/time pattern (long time) (e.g., Monday,  June 15, 2009 6:30:00 PM)
+SELECT FORMAT(HireDate, 'F') AS FullDateLongTime FROM Employees;
 -- Conversion Functions
--- CAST
-SELECT Salary, CAST(Salary AS INT) AS IntSalary 
-FROM Employees;
 
--- CONVERT
-SELECT HireDate, CONVERT(VARCHAR, HireDate, 101) AS USDate 
+-- CAST
+SELECT Salary, CAST(Salary AS INT) AS IntSalary, CAST(Salary AS VARCHAR(20)) AS VarCharSalary
+FROM Employees;
+-- The CAST function is used to convert an expression of one data type to another. In this example, it converts the Salary from DECIMAL to INT, effectively removing the decimal portion.
+
+-- CONVERT : This function is similar to CAST but provides more formatting options, especially for date/time types.
+-- The syntax is CONVERT(data_type [(length)], expression [, style])
+SELECT HireDate, CONVERT(VARCHAR, HireDate) AS Date 
+FROM Employees;
+-- 101 = mm/dd/yyyy
+-- 102 = yyyy.mm.dd
+-- 103 = dd/mm/yyyy
+-- 104 = dd.mm.yyyy
+SELECT HireDate, CONVERT(VARCHAR(50), HireDate, 101) AS USDate 
 FROM Employees;
 
 -- TRY_CAST (returns NULL if conversion fails)

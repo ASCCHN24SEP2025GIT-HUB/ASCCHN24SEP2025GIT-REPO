@@ -1,3 +1,4 @@
+-- Active: 1753159798022@@127.0.0.1@1433@SQLWORKS2
 -- ============================================
 -- SQL MASTER
 -- ============================================
@@ -54,6 +55,8 @@ VALUES (1, 'IT', 'New York'),
        (2, 'HR', 'Chicago'),
        (3, 'Sales', 'Los Angeles');
 
+INSERT INTO Departments (DepartmentID, DepartmentName, Location)
+VALUES (4, 'Marketing', 'San Francisco');
 -- Inserting Rows (Multiple Methods)
 -- Single row insert
 INSERT INTO Employees (EmployeeID, FirstName, LastName, Email, HireDate, Salary, DepartmentID)
@@ -67,6 +70,9 @@ VALUES
     (4, 'Sarah', 'Williams', 'sarah.w@company.com', '2018-11-05', 95000.00, 1),
     (5, 'Tom', 'Brown', 'tom.brown@company.com', '2022-02-14', 71000.00, 2);
 
+INSERT INTO Employees (EmployeeID, FirstName, LastName, Email, HireDate, Salary, DepartmentID)
+VALUES 
+    (7, 'Jannet', 'Smith', 'jane.smith@company.com', '2019-03-20', 82000.00, null);
 SELECT * FROM Employees;
 SELECT * FROM Departments;
 -- Updating Rows
@@ -283,6 +289,7 @@ HAVING AVG(Salary) > 75000;
 -- ============================================
 
 -- Equi Join (using WHERE - older syntax)
+-- Equi Joins are joins that use equality conditions to match rows between tables. They are typically implemented using the INNER JOIN clause, but can also be done using the WHERE clause in older SQL syntax. The alternative of equi join is non-equi join, which uses conditions other than equality (e.g., <, >, <=, >=, BETWEEN).
 SELECT e.FirstName, e.LastName, d.DepartmentName
 FROM Employees e, Departments d
 WHERE e.DepartmentID = d.DepartmentID;
